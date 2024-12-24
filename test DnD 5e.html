@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<!--STYLE START⭐-->
+<style>
+    .background-image {
+        background-image: url('https://cdn.donmai.us/original/62/49/6249332f7034b4f2ba74f1e538e52be7.jpg');
+        background-size: cover; /* Ensures the image covers the entire element */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        width: 100vw; /* Full viewport width */
+        height: 100vh; /* Full viewport height */
+    }
+
+
+    .table-normal {
+        width: 100%;
+    }
+
+    .table-small {
+        width: 50px; /* Set the width to 30% of the parent element */
+    }
+
+    .text-center {
+        text-align: center;
+    }
+    
+    
+
+</style>
+<!--STYLE END⭐-->
+
+<!--SCRIPT START🖥️-->
+<script>
+
+function updateModifiers() {
+    // from abilities score to modifiers
+    var strScore = document.getElementById("strScore").value;
+    document.getElementById("strMod").value = Math.floor((strScore - 10) / 2);
+
+    var dexScore = document.getElementById("dexScore").value;
+    document.getElementById("dexMod").value = Math.floor((dexScore - 10) / 2);
+
+    var mindScore = document.getElementById("mindScore").value;
+    document.getElementById("mindMod").value = Math.floor((mindScore - 10) / 2);
+
+    var chaScore = document.getElementById("chaScore").value;
+    document.getElementById("chaMod").value = Math.floor((chaScore - 10) / 2);
+}
+
+
+</script>
+<!--SCRIPT END🖥️-->
+
+<body 
+<div class="background-image"></div>
+     
+<div class="container"> 
+        <div class="row"> 
+            
+            <!-- TABELLA STATISTICHE-->
+            <div class="col-md-4"> 
+                <table class="table table-normal">
+                    <tr style="background-color: rgba(247, 0, 255, 0.258);"> 
+                        <th class="text-center table-small">Ability</th>
+                        <th class="text-center table-small">Score</th>
+                        <th class="text-center table-small">Mod</th>
+                    </tr>
+                    <!-- STRENGTH -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Strength<br>💪</td>
+                        <td class="text-center align-middle"><input class="text-center table-small" type="number" placeholder="10" id="strScore" onchange="updateModifiers()"></td>
+                        <td class="align-middle"><input class="text-center" style="width:50px;" type="number" placeholder="+0" id="strMod">
+                            </tr>
+                    <!-- DEXTERITY -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Dexterity<br>⚔️</td>
+                        <td class="text-center  align-middle"><input class="text-center table-small" type="number" placeholder="10" id="dexScore" onchange="updateModifiers()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="dexMod">
+                            </tr>
+                    <!-- MIND -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Mind<br>🧠</td>
+                        <td class="text-center table-auto align-middle"><input class="text-center table-small" type="number" placeholder="10" id="mindScore" onchange="updateModifiers()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="mindMod">
+                            </tr>
+                    <!-- ASD -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Kawai<br>Meter<br>🖥️</td>
+                        <td class="text-center table-auto align-middle"><input class="text-center table-small" type="number" placeholder="10" id="chaMod" onchange="updateModifiers()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="chaMod">
+                            </tr>
+                </table>
+            </div>
+
+            <!-- PLAYER INFO-->
+            <div class="col-md-4" style="background-color: rgba(247, 0, 255, 0.258);"> 
+                <H2>Player Level</H2>
+
+                <br>
+                <input type="number" id="PlayerLevel" placeholder="0">
+
+                <p>Ni Ha Ha Ha Ha <br>
+                    Ni Ha Ha Ha Ha <br>
+                    Ni Ha Ha Ha Ha <br>
+                    Ni Ha Ha Ha Ha</p>
+            
+            </div>
+
+            <!-- PROFICENCY INFO-->
+            <div class="col-md-4" style="background-color: rgba(0, 204, 255, 0.258);"> 
+                <H2>Proficency Bonus</H2>
+                <br>
+                <input type="number" id="profBonus" placeholder="+0">
+            
+            </div>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
