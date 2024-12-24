@@ -37,6 +37,7 @@
 <!--STYLE END⭐-->
 
 <!--SCRIPT START🖥️-->
+
 <script>
 
 function updateModifiers() {
@@ -54,8 +55,28 @@ function updateModifiers() {
     document.getElementById("chaMod").value = Math.floor((chaScore - 10) / 2);
 }
 
+function updateProfBonus() {
+    // from player level to proficency bonus
+    var playerLevel = parseInt(document.getElementById("PlayerLevel").value);
+        if (playerLevel>=1) {
+            document.getElementById("profBonus").value = 2; 
+            }
+        if (playerLevel>=5) {
+            document.getElementById("profBonus").value = 3; 
+            }
+        if (playerLevel>=9) {
+            document.getElementById("profBonus").value = 4; 
+            }
+        if (playerLevel>=13) {
+            document.getElementById("profBonus").value = 5; 
+            }
+        if (playerLevel>=17) {
+            document.getElementById("profBonus").value = 6; 
+            }
+        };
 
 </script>
+
 <!--SCRIPT END🖥️-->
 
 <body 
@@ -104,7 +125,7 @@ function updateModifiers() {
                 <H2>Player Level</H2>
 
                 <br>
-                <input type="number" id="PlayerLevel" placeholder="+0">
+                <input class="text-center" type="number" id="PlayerLevel" placeholder="+0" onchange="updateProfBonus()">
 
                 <p>Ni Ha Ha Ha Ha <br>
                     Ni Ha Ha Ha Ha <br>
@@ -117,7 +138,10 @@ function updateModifiers() {
             <div class="col-md-4" style="background-color: rgba(0, 204, 255, 0.258);"> 
                 <H2>Proficency Bonus</H2>
                 <br>
-                <input type="number" id="profBonus" value="+0">
+                <input class="text-center" type="number" id="profBonus" value="0" readonly>
+                <br> 
+                <br>
+
             
             </div>
 
