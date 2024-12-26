@@ -95,6 +95,8 @@ function updateModifiers() {
 
     var chaScore = document.getElementById("chaScore").value;
     document.getElementById("kawaMod").value = Math.floor((chaScore - 10) / 2);
+
+    
 }
 
 function updateProfBonus() {
@@ -122,28 +124,34 @@ function equipArmor(equippedArmor) {
     if (armor == "Naked") {
         document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value);
     }
-    if (armor == "Bikini") {
+    else if (armor == "Bikini") {
         document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 1;
     }
-    if (armor == "Maid") {
+    else if (armor == "Maid") {
         document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 2;
     }
-    if (armor == "Gym") {
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 3;
+    else if (armor == "Gym") {  // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 3;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 6;}
+        else {document.getElementById("armorClass").value = tempArmor;}
+        
     }
-    if (armor == "Bunny") {
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 4;
+    else if (armor == "Bunny") { // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 4;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 7;}
+        else {document.getElementById("armorClass").value = tempArmor;}
     }
-    if (armor == "bikini-armor") {
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 5;
+    else if (armor == "bikini-armor") { // heavy armor 
+        document.getElementById("armorClass").value = 7;
     }
-    if (armor == "Pajama") {
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 6;
+    else if (armor == "Pajama") { // heavy armor
+        document.getElementById("armorClass").value = 8;
     }
 }
 
 function updateAll() {
     updateModifiers();
+    equipArmor(equippedArmor);
     updateProfBonus();
     setSkills();
 }
@@ -211,23 +219,21 @@ function updateAll() {
                        <H2 style="width: px; margin-top: 4px">Equipped Armor:</H2>
                        <select id="equippedArmor" onchange="equipArmor(this)"> 
                            
+                            <option value="Naked">Naked</option>    
+                        
                             <optgroup id="Light Armor" Value="Light Armor" label="Light Armor"> 
-                            <option value="Naked">Naked</option>
                             <option value="Bikini">Bikini</option>
                             <option value="Maid">Maid</option>
                             </optgroup>
 
                             <optgroup id="Medium Armor" Value="Medium Armor" label="Medium Armor"> 
-                            <option value="Naked">Naked</option>
                             <option value="Gym">Gym Clothes</option>
                             <option value="Bunny">Bunny Armor</option>
                             </optgroup>
 
                             <optgroup id="Heavy Armor" Value="Heavy Armor" label="Heavy Armor"> 
-                            <option value="Naked">Naked</option>
                             <option value="bikini-armor">Bikini Armor</option>
                             <option value="Pajama">Pajama</option>
-
                             </optgroup>                            
 
                        </select>
@@ -295,3 +301,10 @@ function updateAll() {
 
 </body>
 </html>
+
+
+
+
+
+
+
