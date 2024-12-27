@@ -46,6 +46,18 @@
         background-color: rgba(21, 255, 0, 0.75);
     }
 
+    .btn-info {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255, 1);
+        background-color: rgba(0, 162, 255, 0.75);
+    }
+
+    select {
+        padding: 3px;
+        min-width: 50px;
+    }
+
     
 
 </style>
@@ -116,7 +128,7 @@ function updateModifiers() {
 
 function updateProfBonus() {
     // from player level to proficency bonus
-    var playerLevel = parseInt(document.getElementById("PlayerLevel").value);
+    var playerLevel = parseInt(document.getElementById("playerLevel").value);
         if (playerLevel>=0) {
             document.getElementById("profBonus").value = 2; 
             }
@@ -196,6 +208,42 @@ function healHP() {
     }
 }
 
+function levelUp() {
+    resetHP();
+    resetHitDices();
+}
+
+function longRest() {
+    resetHP();
+    resetHitDices();
+}
+
+function resetHP() {
+    document.getElementById("currentHP").value = document.getElementById("maxHP").value;
+}
+
+function resetHitDices() {
+    document.getElementById("hitDices").value = parseInt(document.getElementById("playerLevel").value);
+}
+
+function shortRest() {
+    var currentDices = parseInt(document.getElementById("hitDices").value);
+        if (currentDices > 0) {
+    var currentHP = parseInt(document.getElementById("currentHP").value);
+    var maxHP = parseInt(document.getElementById("maxHP").value);
+    var maxDie = parseInt(document.getElementById("hitDicesType").value);
+        var hitDieRoll = Math.floor(Math.random() * Math.floor(maxDie));
+    
+    if (currentHP + hitDieRoll <= maxHP) {
+        document.getElementById("currentHP").value = currentHP + hitDieRoll;
+        } else {
+            document.getElementById("currentHP").value = maxHP;
+                }
+
+    document.getElementById("hitDices").value = currentDices - 1;
+    }
+}
+
 function updateAll() {
     updateModifiers();
     enableArmor();
@@ -264,8 +312,24 @@ function updateAll() {
                 <span class="btn-danger" onclick="takeDamage();">Damage</span>
                 <input style="width: 50px; text-align: center;" type="number" id="modHP">
                 <span class="btn-success" onclick="healHP();">Heal</span>
+                
+                <br><br>
+                
+                <span style="color: aliceblue; font-weight: 600;">Hit Dices</span>
+                <input style="width: 50px; text-align: center;" type="number" id="hitDices" placeholder="0">
+                <select style="text-align: center;" id="hitDicesType">
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                </select>
+                <br><br>
+                <span class="btn-info" onclick="shortRest();">Short Rest</span>
+                <span class="btn-info" onclick="longRest();">Long Rest 🌙</span>
 
 
+                <br><br>
 
                 <table>  <!-- AC -->              
                     <tr> 
@@ -307,7 +371,7 @@ function updateAll() {
                 <!-- PLAYER LEVEL-->
             <div class="col-md-4" style="background-color: rgba(0, 204, 255, 0.258);"> 
                 <H2 style="float: left;">Player Level</H2>
-                <input style="float: right; width: 45% ; margin-top: 8px" class="text-center" type="number" id="PlayerLevel" placeholder="+0" onchange="updateAll()">                   
+                <input style="float: right; width: 45% ; margin-top: 8px" class="text-center" type="number" id="playerLevel" placeholder="+0" onchange="updateAll(); levelUp();">                   
                 <br><br>
                          
                 <!-- PROFICENCY INFO-->
@@ -368,4 +432,5 @@ function updateAll() {
 
 
 </body>
+
 </html>
