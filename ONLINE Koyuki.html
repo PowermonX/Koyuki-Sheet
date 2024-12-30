@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    
+
+</head>
+
+
+
+<!--STYLE START⭐-->
+<style>
+    .background-image {
+        background-image: url('https://cdn.donmai.us/original/62/49/6249332f7034b4f2ba74f1e538e52be7.jpg');
+        background-size: cover; /* Ensures the image covers the entire element */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        width: 100vw; /* Full viewport width */
+        height: 100vh; /* Full viewport height */
+    }
+
+
+    .table-normal {
+        width: 100%;
+    }
+
+    .table-small {
+        width: 50px; /* Set the width to 30% of the parent element */
+    }
+
+    .text-center {
+        text-align: center;
+    }
+    
+
+    .btn-danger {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255);
+        background-color: rgba(255, 0, 0, 0.75);
+    }
+
+    .btn-success {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255, 1);
+        background-color: rgba(21, 255, 0, 0.75);
+    }
+
+    .btn-info {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255, 1);
+        background-color: rgba(0, 162, 255, 0.75);
+    }
+
+    select {
+        padding: 3px;
+        min-width: 50px;
+    }
+
+    
+
+</style>
+
+<!--SCRIPT START🖥️-->
+<script>
+
+function SetSkills() {
+    var profBonus = parseInt(document.getElementById("profBonus").value);
+    var strMod = parseInt(document.getElementById("strMod").value);
+    var dexMod = parseInt(document.getElementById("dexMod").value);
+    var mindMod = parseInt(document.getElementById("mindMod").value);
+    var kawaMod = parseInt(document.getElementById("kawaMod").value);
+// acrobatics
+    if (document.getElementById("acroProf").checked == true) {
+       document.getElementById("acroScore").value = profBonus + dexMod;
+    } else {
+        document.getElementById("acroScore").value = dexMod;
+    }
+// athletics
+    if (document.getElementById("athlProf").checked == true) {
+       document.getElementById("athlScore").value = profBonus + strMod;
+    } else {
+        document.getElementById("athlScore").value = strMod;
+    }
+// melee
+    if (document.getElementById("meleeProf").checked == true) {
+       document.getElementById("meleeScore").value = profBonus + strMod;
+    } else {
+        document.getElementById("meleeScore").value = strMod;
+    }
+// shooting
+    if (document.getElementById("shootProf").checked == true) {
+       document.getElementById("shootScore").value = profBonus + dexMod;
+    } else {
+        document.getElementById("shootScore").value = dexMod;
+    }
+// talking
+    if (document.getElementById("talkProf").checked == true) {
+       document.getElementById("talkScore").value = profBonus + mindMod;
+    } else {
+        document.getElementById("talkScore").value = mindMod;
+    }
+// crying
+    if (document.getElementById("cryProf").checked == true) {
+       document.getElementById("cryScore").value = profBonus + kawaMod;
+    } else {
+        document.getElementById("cryScore").value = kawaMod;
+    }
+}
+
+function updateModifiers() {
+    // from abilities score to modifiers
+    var strScore = document.getElementById("strScore").value;
+    document.getElementById("strMod").value = Math.floor((strScore - 10) / 2);
+
+    var dexScore = document.getElementById("dexScore").value;
+    document.getElementById("dexMod").value = Math.floor((dexScore - 10) / 2);
+
+    var mindScore = document.getElementById("mindScore").value;
+    document.getElementById("mindMod").value = Math.floor((mindScore - 10) / 2);
+
+    var kawaScore = document.getElementById("kawaScore").value;
+    document.getElementById("kawaMod").value = Math.floor((kawaScore - 10) / 2);
+
+    
+}
+
+function updateProfBonus() {
+    // from player level to proficency bonus
+    var playerLevel = parseInt(document.getElementById("playerLevel").value);
+        if (playerLevel>=0) {
+            document.getElementById("profBonus").value = 2; 
+            }
+        if (playerLevel>=5) {
+            document.getElementById("profBonus").value = 3; 
+            }
+        if (playerLevel>=9) {
+            document.getElementById("profBonus").value = 4; 
+            }
+        if (playerLevel>=13) {
+            document.getElementById("profBonus").value = 5; 
+            }
+        if (playerLevel>=17) {
+            document.getElementById("profBonus").value = 6; 
+            }
+        };
+
+function equipArmor(equippedArmor) {
+    var armor = document.getElementById("equippedArmor").value;
+    if (armor == "Naked") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value);
+    }
+    else if (armor == "Swimsuit") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 1;
+    }
+    else if (armor == "Maid") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 2;
+    }
+    else if (armor == "Gym") {  // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 3;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 6;}
+        else {document.getElementById("armorClass").value = tempArmor;}
+        
+    }
+    else if (armor == "Pajama") { // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 4;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 7;}
+        else {document.getElementById("armorClass").value = tempArmor;}
+    }
+    else if (armor == "bikini") { // heavy armor 
+        document.getElementById("armorClass").value = 7;
+    }
+    else if (armor == "Bunny") { // heavy armor
+        document.getElementById("armorClass").value = 8;
+    }
+}
+
+function enableArmor() {
+    var strScore = document.getElementById("strScore").value;
+    if (strScore >= 15) {
+        document.getElementById("bikini").disabled = false;
+        document.getElementById("bunny").disabled = false;
+    } else if (strScore >= 13) {
+        document.getElementById("bikini").disabled = false;
+        document.getElementById("bunny").disabled = true;
+    }
+}
+
+function takeDamage() {
+    var amount = document.getElementById("modHP").value;
+    var currentHP = document.getElementById("currentHP").value;
+    if (currentHP - amount >= 0) {
+        document.getElementById("currentHP").value = currentHP - amount;
+    } else {
+        document.getElementById("currentHP").value = 0;
+    }
+}
+
+function healHP() {
+    var amount = document.getElementById("modHP").value;
+    var currentHP = document.getElementById("currentHP").value;
+    var maxHP = document.getElementById("maxHP").value;
+    if (currentHP + amount <= maxHP) {
+        document.getElementById("currentHP").value = parseInt(currentHP) + parseInt(amount);
+    } else {
+        document.getElementById("currentHP").value = maxHP;
+    }
+}
+
+function levelUp() {
+    resetHP();
+    resetHitDices();
+}
+
+function longRest() {
+    resetHP();
+    resetHitDices();
+}
+
+function resetHP() {
+    document.getElementById("currentHP").value = document.getElementById("maxHP").value;
+}
+
+function resetHitDices() {
+    document.getElementById("hitDices").value = parseInt(document.getElementById("playerLevel").value);
+}
+
+function shortRest() {
+    var currentDices = parseInt(document.getElementById("hitDices").value);
+        if (currentDices > 0) {
+    var currentHP = parseInt(document.getElementById("currentHP").value);
+    var maxHP = parseInt(document.getElementById("maxHP").value);
+    var maxDie = parseInt(document.getElementById("hitDicesType").value);
+        var hitDieRoll = Math.floor(Math.random() * Math.floor(maxDie));
+    
+    if (currentHP + hitDieRoll <= maxHP) {
+        document.getElementById("currentHP").value = currentHP + hitDieRoll;
+        } else {
+            document.getElementById("currentHP").value = maxHP;
+                }
+
+    document.getElementById("hitDices").value = currentDices - 1;
+    }
+}
+
+function updateAll() {  // update all ⭐⭐⭐⭐⭐⭐
+    updateModifiers();
+    enableArmor();
+    equipArmor(equippedArmor);
+    updateProfBonus();
+    SetSkills();
+}
+
+                        var characterData = [];
+
+                        function LoadSheet() {
+                        var file =
+                            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSjNvYrx9_JuoAgU55JmdvyM0CGOlNMDd75FTuFf3cv6grFs_ULs9A2LlEnWQCbUxZKD0eV7BCcPDsY/pub?gid=0&single=true&output=csv";
+
+                        Papa.parse(file, {
+                            download: true,
+                            header: true,
+                            complete: function (results) {
+                            characterData = results.data;
+                            PopulateData(characterData);
+                            }
+                        });
+                        }
+
+                            function PopulateData(data) {
+                        var playerList;
+                        var uniquePlayers = [];
+                        for (var i = 0; i < data.length; i++) {
+                            if (!uniquePlayers.includes(data[i].PlayerName))
+                            {
+                            uniquePlayers.push(data[i].PlayerName);
+                            playerList += '<option>' + data[i].PlayerName + '</option>';
+                            } 
+                        } 
+                        document.getElementById("players").innerHTML = playerList;
+                        LoadPlayer();
+                        }
+
+                        function LoadPlayer() {
+                        var selectedPlayer = document.getElementById("playerSelect").value;
+                        var playerCharacters;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].PlayerName == selectedPlayer)
+                            {
+                            playerCharacters += '<option>' + characterData[i].CharacterName + '</option>';
+                            } 
+                        }
+                        document.getElementById("characters").innerHTML = playerCharacters;
+                        LoadCharacter();
+                        }
+
+
+                        function SetLevel() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                                document.getElementById("playerLevel").value = characterData[i].Level;
+                                SetProficiencyBonus();
+                                return;
+                            }
+                        }
+                        }
+
+                        function SetProficiencyBonus() {
+                        var level = document.getElementById("playerLevel").value;
+                        document.getElementById("profBonus").value = Math.floor(2 + ((level-1)/4));
+                        }
+
+                        function UpdateAbilityScores() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                            document.getElementById("strScore").value = characterData[i].STR;
+                            document.getElementById("dexScore").value = characterData[i].DEX;
+                            document.getElementById("mindScore").value = characterData[i].MIND;
+                            document.getElementById("kawaScore").value = characterData[i].KAWA;
+                            UpdateModifiers();
+                            return;
+                            } 
+                        }
+                        }
+
+                        function UpdateModifiers() {
+                        var strScore = document.getElementById("strScore").value;
+                        document.getElementById("strMod").value = Math.floor((strScore - 10)/2);
+                        var dexScore = document.getElementById("dexScore").value;
+                        document.getElementById("dexMod").value = Math.floor((dexScore - 10)/2);
+                        var mindScore = document.getElementById("mindScore").value;
+                        document.getElementById("mindMod").value = Math.floor((mindScore - 10)/2);
+                        var kawaScore = document.getElementById("kawaScore").value;
+                        document.getElementById("kawaMod").value = Math.floor((kawaScore - 10)/2);
+                        SetSkills();
+                        UpdateAC();
+                        }
+
+                        function UpdateSkillProficiency() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                            document.getElementById("acroProf").checked = IsTrue(characterData[i].Acrobatics); 
+                            document.getElementById("athlProf").checked = IsTrue(characterData[i].Athletics);
+                            document.getElementById("meleeProf").checked = IsTrue(characterData[i].Melee);
+                            document.getElementById("shootProf").checked = IsTrue(characterData[i].Shooting);
+                            document.getElementById("talkProf").checked = IsTrue(characterData[i].Talking);
+                            document.getElementById("cryProf").checked = IsTrue(characterData[i].Crying);
+                            SetSkills();
+                            return;
+                            } 
+                        }
+                        }
+
+                        function UpdateHP() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                            document.getElementById("maxHP").value = characterData[i].MaxHP;
+                            document.getElementById("currentHP").value = characterData[i].HP;
+                            }
+                        }
+                        }
+
+                        function UpdateHitDice() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                            document.getElementById("hitDice").value = characterData[i].HitDice;
+                            document.getElementById("hitDie").value = characterData[i].HitDie;
+                            }
+                        }
+                        }
+
+                        function LoadGear() {
+                        var selectedCharacter = document.getElementById("characterSelect").value;
+                        for (var i = 0; i < characterData.length; i++) {
+                            if (characterData[i].CharacterName == selectedCharacter)
+                            {
+                            document.getElementById("equippedArmor").value = characterData[i].Armor;
+                            document.getElementById("equippedShield").value = characterData[i].Shield;
+                            }
+                        }
+                        }
+
+
+                        function IsTrue(string) {
+                        if (string.toLowerCase() == 'true') { return true; }
+                        }
+
+                        
+                        function SaveData() {  // SAVE DATA
+                            var formData = new FormData(document.getElementById("charSheet"));
+                            fetch('https://script.google.com/macros/s/AKfycbyO_cyKYzoUjHezqgq9dstEjQZzUu5ikmNG0sxS5ucQyV6CyBtmlUK4z0eX7M6lQqR1/exec', {
+                                method: 'POST',
+                                body: formData,
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Success:', data);
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                        }
+
+
+                        function LoadCharacter() { // LOAD DATA
+                        updateAll();      
+                        SetLevel();                      
+                        UpdateAbilityScores();
+                        UpdateSkillProficiency();
+                        UpdateHP();
+                        UpdateHitDice();
+                        LoadGear();
+                        }
+
+
+                        window.onload = LoadSheet();
+
+
+
+
+</script>
+
+<!--SCRIPT END🖥️-->
+
+<body class="background-image">
+     
+<div class="container"> 
+    <form id="charSheet" name="characterSheet">
+
+
+    <h1 class="text-center" style="background-color: rgba(255, 255, 255, 0.671);">ARE YOU A KOYUKI???</h1>   <!--KOYUKI ???-->
+    
+    <div class="row"> 
+            
+            <!-- colonna 1 --> 
+            <div class="col-md-4" > 
+                <div style="background-color: rgba(247, 0, 255, 0.258); padding-left: 17px;">
+                <h2>Player</h2>
+                    <input name="PlayerName" id="playerSelect" onchange="loadPlayer();" list="players" />
+                    <datalist id="players"></datalist>
+                    <br>
+                    <h2>Character</h2>
+                    <input name="CharacterName" id="characterSelect" onchange="loadCharacter();" list="characters"/>
+                    <datalist id="characters"></datalist>
+                    <br><br>
+                </div>    
+                <br>
+
+                <!-- save & load -->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="btn-success" onclick="saveData(); showWaitMessage();">Save Data 💾</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="btn-info" onclick="loadData(); showWaitMessage();">Load Data 🗂️</span>
+
+
+                <br><br>
+
+            <!-- PLAYER INFO-->
+                       
+                <!-- PLAYER LEVEL-->
+                <div style="background-color: rgba(0, 204, 255, 0.258);"> 
+                    <H2 style="float: left;">Player Level</H2>
+                    <input name="Level" id="playerLevel" style="float: right; width: 45% ; margin-top: 8px" class="text-center" type="number"  value="1" onchange="updateAll(); levelUp();">                   
+                    <br><br>
+                             
+                    <!-- PROFICENCY INFO-->
+                    <H2 style="width: 75%; float: left; margin-top: 18px;">Proficency Bonus</H2>
+                    <br>
+                    <input style="float: right ;width: 25%;" class="text-center" type="number" id="profBonus" value="2" readonly>
+                    <br><br>                 
+                </div>
+                <br>
+
+
+                <!-- TABELLA STATISTICHE-->
+                <table class="table table-normal">   
+                    <tr style="background-color: rgba(247, 0, 255, 0.258);"> 
+                        <th class="text-center table-small">Ability</th>
+                        <th class="text-center table-small">Score</th>
+                        <th class="text-center table-small">Mod</th>
+                    </tr>
+                    <!-- STRENGTH -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Strength<br>💪</td>
+                        <td class="text-center align-middle"><input name="STR" class="text-center table-small" type="number" placeholder="10" id="strScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center" style="width:50px;" type="number" placeholder="+0" id="strMod" readonly>
+                            </tr>
+                    <!-- DEXTERITY -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Dexterity<br>⚔️</td>
+                        <td class="text-center  align-middle"><input name="DEX" class="text-center table-small" type="number" placeholder="10" id="dexScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="dexMod" readonly>
+                            </tr>
+                    <!-- MIND -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Mind<br>🧠</td>
+                        <td class="text-center table-auto align-middle"><input name="MIND" class="text-center table-small" type="number" placeholder="10" id="mindScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="mindMod" readonly>
+                            </tr>
+                    <!-- Kawai -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Kawai<br>❣️</td>
+                        <td class="text-center table-auto align-middle"><input name="KAWAI" class="text-center table-small" type="number" placeholder="10" id="kawaScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="kawaMod" readonly>
+                            </tr>
+                </table>
+            </div>
+
+            <!-- NUMBERS INFO 🩷🩷🩷-->
+            <div class="col-md-4" style="background-color: rgba(247, 0, 255, 0.258);">             
+                  
+                <h2>Hit Points</h2>
+                <span style="color: rgb(0, 0, 0); font-weight: 700;">HP: </span> 
+                <input style="width: 50px; text-align: center;" type="number" name="currentHP" id="currentHP" placeholder="0"> /
+                <input style="width: 50px; text-align: center;" type="number" name="maxHP" id="maxHP" placeholder="0">
+
+                <br><br>
+
+                <span class="btn-danger" onclick="takeDamage();">Damage</span>
+                <input style="width: 50px; text-align: center;" type="number" id="modHP" placeholder="0">
+                <span class="btn-success" onclick="healHP();">Heal</span>
+                
+                <br><br>
+                
+                <span style="color: rgb(0, 0, 0); font-weight: 700;">Hit Dices</span>
+                <input style="width: 50px; text-align: center;" type="number" name="hitDices" id="hitDices" placeholder="0">
+                <select style="text-align: center;" name="hitDicesType" id="hitDicesType">
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                </select>
+                <br><br>
+                <span class="btn-info" onclick="shortRest();">Short Rest</span>
+                <span class="btn-info" onclick="longRest();">Long Rest 🌙</span>
+
+
+                <br><br>
+
+                <!-- AC -->   
+                <table>             
+                    <tr> 
+                       <th><H2 style="width: 75px; margin-top: 4px">AC:</H2></th>
+                       <td> <input style="width: 115px;" class="text-center" type="number" id="armorClass" placeholder="+0" onchange="updateAll()" readonly></td>
+                    </tr>
+                </table>   
+
+                 <!--Equipped Armor-->              
+                    
+                       <H2 style="width: px; margin-top: 4px">Equipped Armor:</H2>
+                       <select name="armor" id="equippedArmor" onchange="equipArmor(this)" > 
+                           
+                            <option value="Naked">Naked</option>    
+                        
+                            <optgroup id="Light Armor" Value="Light Armor" label="Light Armor"> 
+                            <option value="Swimsuit">Swimsuit</option>
+                            <option value="Maid">Maid</option>
+                            </optgroup>
+
+                            <optgroup id="Medium Armor" Value="Medium Armor" label="Medium Armor"> 
+                            <option value="Gym">Gym Clothes</option>
+                            <option value="Pajama">Pajama</option>
+                            </optgroup>
+
+                            <optgroup id="Heavy Armor" Value="Heavy Armor" label="Heavy Armor"> 
+                            <option value="bikini" id="bikini" disabled>Bikini Armor</option>
+                            <option value="bunny" id="bunny" disabled>Bunny Crusader</option>
+                            </optgroup>                            
+
+                       </select>
+                       <br><br>
+                    
+
+            </div>
+
+
+
+        <!-- skills -->
+         <div class="row" style="background-color: rgba(0, 204, 255, 0.258); margin-left: 0px;">
+            <div class="col-md-4" > 
+                <H2>Skills</H2>
+                
+                <table>
+                    <tr>
+                        <td><input name="Acrobatics" type="checkbox" id="acroProf" onchange="updateAll()"></td>
+                        <td>Acrobatics</label></td>
+                        <td><input type="number" id="acroScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input name="Athletics" type="checkbox" id="athlProf" onchange="updateAll()"></td>
+                        <td>Atheltics</label></td>
+                        <td><input type="number" id="athlScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input name="Melee" type="checkbox" id="meleeProf" onchange="updateAll()"></td>
+                        <td>Melee</label></td>
+                        <td><input type="number" id="meleeScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input name="Shoot" type="checkbox" id="shootProf" onchange="updateAll()"></td>
+                        <td>Shooting</label></td>
+                        <td><input type="number" id="shootScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input name="Talking" type="checkbox" id="talkProf" onchange="updateAll()"></td>
+                        <td>Talking</label></td>
+                        <td><input type="number" id="talkScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input name="Crying" type="checkbox" id="cryProf" onchange="updateAll()"></td>
+                        <td>Crying</label></td>
+                        <td><input type="number" id="cryScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="color: rgb(255, 255, 255);" class="text-center">Ni Ha Ha Ha?</td>
+                    </tr>
+
+                
+            </table>
+            </div>
+
+            </form>
+         </div>
+
+
+</body>
+
+</html>
