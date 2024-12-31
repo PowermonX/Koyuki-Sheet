@@ -520,10 +520,10 @@ function showWaitMessage() { // Wait Please Message ---------------------
 
 <<body class="background-image">
 <!--HTML START ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐-->
-<div class="container"> 
+<div class="container" > 
   <form id="charSheet" name="characterSheet">
     <div class="row">
-      <div class="col-4">      
+      <div class="col-4" style="background-color: rgba(247, 0, 255, 0.258); padding-left: 17px;">      
         <h2>Player</h2>         
           <input name="PlayerName" id="playerSelect" onchange="LoadPlayer()" list="players"/>
         <datalist id="players"></datalist>
@@ -537,7 +537,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
         <br><br>
       <h2>Ability Scores</h2>
         <br>
-        <table class="table">
+        <table class="table" style="background-color: rgba(255, 255, 255, 0.493); padding-left: 17px; text-align: center;">
           <tr>
             <th>Ability</th>
             <th>Score</th>
@@ -598,7 +598,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
         
     </div>
     
-      <div class="col-4">
+      <div class="col-4" style="background-color: rgba(0, 183, 255, 0.258); padding-left: 17px;">
       
       
       
@@ -641,7 +641,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
       
       <div class="center-me">
       <h2>Hit Points</h2>
-      <span>HP: </span>
+      <span  style="font-weight:800;">HP: </span >
       <input name="HP" class="stat" type="number" id="currentHP" /> / 
       <input name="MaxHP" class="stat" type="number" id="maxHP" />
       </div>
@@ -657,7 +657,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
       <br>
       
       <div class="center-me">
-        <span>Hit Dice: </span><input name="HitDice" class="stat" id="hitDice" type="number" /> / <span class="dice">d</span>
+        <span   style="font-weight:800;">Hit Dice: </span><input name="HitDice" class="stat" id="hitDice" type="number" /> / <span class="dice">d</span>
         <select name="HitDie" id="hitDie">
           <option>4</option>
           <option>6</option>
@@ -673,7 +673,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
       
     </div>
     
-      <div class="col-4">
+      <div class="col-4" style="background-color: rgba(247, 0, 255, 0.258); padding-left: 17px;">
       
       <h2>Proficiency Bonus</h2>
       
@@ -685,7 +685,7 @@ function showWaitMessage() { // Wait Please Message ---------------------
       
       <h2>Skills</h2>
       
-      <table class="table">
+      <table class="table" style="background-color: rgba(255, 255, 255, 0.493); padding-left: 17px;">
         
         <tr>
           <td><input name="Acrobatics" type="checkbox" id="acroProf" onchange="SetSkills()"></td>
