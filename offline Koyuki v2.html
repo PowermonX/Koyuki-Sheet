@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<!--STYLE START⭐-->
+<style>
+    .background-image {
+        background-image: url('https://cdn.donmai.us/original/62/49/6249332f7034b4f2ba74f1e538e52be7.jpg');
+        background-size: cover; /* Ensures the image covers the entire element */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        width: 100vw; /* Full viewport width */
+        height: 100vh; /* Full viewport height */
+    }
+
+
+    .table-normal {
+        width: 100%;
+    }
+
+    .table-small {
+        width: 50px; /* Set the width to 30% of the parent element */
+    }
+
+    .text-center {
+        text-align: center;
+    }
+    
+
+    .btn-danger {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255);
+        background-color: rgba(255, 0, 0, 0.75);
+    }
+
+    .btn-success {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255, 1);
+        background-color: rgba(21, 255, 0, 0.75);
+    }
+
+    .btn-info {
+        padding:5px;
+        border-radius: 5px;
+        border-color: rgb(255, 255, 255, 1);
+        background-color: rgba(0, 162, 255, 0.75);
+    }
+
+    select {
+        padding: 3px;
+        min-width: 50px;
+    }
+
+    
+
+</style>
+
+<!--SCRIPT START🖥️-->
+<script>
+
+function setSkills() {
+    var profBonus = parseInt(document.getElementById("profBonus").value);
+    var strMod = parseInt(document.getElementById("strMod").value);
+    var dexMod = parseInt(document.getElementById("dexMod").value);
+    var mindMod = parseInt(document.getElementById("mindMod").value);
+    var kawaMod = parseInt(document.getElementById("kawaMod").value);
+// acrobatics
+    if (document.getElementById("acroProf").checked == true) {
+       document.getElementById("acroScore").value = profBonus + dexMod;
+    } else {
+        document.getElementById("acroScore").value = dexMod;
+    }
+// athletics
+    if (document.getElementById("athlProf").checked == true) {
+       document.getElementById("athlScore").value = profBonus + strMod;
+    } else {
+        document.getElementById("athlScore").value = strMod;
+    }
+// melee
+    if (document.getElementById("meleeProf").checked == true) {
+       document.getElementById("meleeScore").value = profBonus + strMod;
+    } else {
+        document.getElementById("meleeScore").value = strMod;
+    }
+// shooting
+    if (document.getElementById("shootProf").checked == true) {
+       document.getElementById("shootScore").value = profBonus + dexMod;
+    } else {
+        document.getElementById("shootScore").value = dexMod;
+    }
+// talking
+    if (document.getElementById("talkProf").checked == true) {
+       document.getElementById("talkScore").value = profBonus + mindMod;
+    } else {
+        document.getElementById("talkScore").value = mindMod;
+    }
+// crying
+    if (document.getElementById("cryProf").checked == true) {
+       document.getElementById("cryScore").value = profBonus + kawaMod;
+    } else {
+        document.getElementById("cryScore").value = kawaMod;
+    }
+}
+
+function updateModifiers() {
+    // from abilities score to modifiers
+    var strScore = document.getElementById("strScore").value;
+    document.getElementById("strMod").value = Math.floor((strScore - 10) / 2);
+
+    var dexScore = document.getElementById("dexScore").value;
+    document.getElementById("dexMod").value = Math.floor((dexScore - 10) / 2);
+
+    var mindScore = document.getElementById("mindScore").value;
+    document.getElementById("mindMod").value = Math.floor((mindScore - 10) / 2);
+
+    var chaScore = document.getElementById("chaScore").value;
+    document.getElementById("kawaMod").value = Math.floor((chaScore - 10) / 2);
+
+    
+}
+
+function updateProfBonus() {
+    // from player level to proficency bonus
+    var playerLevel = parseInt(document.getElementById("playerLevel").value);
+        if (playerLevel>=0) {
+            document.getElementById("profBonus").value = 2; 
+            }
+        if (playerLevel>=5) {
+            document.getElementById("profBonus").value = 3; 
+            }
+        if (playerLevel>=9) {
+            document.getElementById("profBonus").value = 4; 
+            }
+        if (playerLevel>=13) {
+            document.getElementById("profBonus").value = 5; 
+            }
+        if (playerLevel>=17) {
+            document.getElementById("profBonus").value = 6; 
+            }
+        };
+
+function equipArmor(equippedArmor) {
+    var armor = document.getElementById("equippedArmor").value;
+    if (armor == "Naked") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value);
+    }
+    else if (armor == "Swimsuit") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 1;
+    }
+    else if (armor == "Maid") {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 2;
+    }
+    else if (armor == "Gym") {  // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 3;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 6;}
+        else {document.getElementById("armorClass").value = tempArmor;}
+        
+    }
+    else if (armor == "Pajama") { // medium armor 
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 4;
+        if (tempArmor >= 6) {document.getElementById("armorClass").value = 7;}
+        else {document.getElementById("armorClass").value = tempArmor;}
+    }
+    else if (armor == "bikini") { // heavy armor 
+        document.getElementById("armorClass").value = 7;
+    }
+    else if (armor == "Bunny") { // heavy armor
+        document.getElementById("armorClass").value = 8;
+    }
+}
+
+function enableArmor() {
+    var strScore = document.getElementById("strScore").value;
+    if (strScore >= 15) {
+        document.getElementById("bikini").disabled = false;
+        document.getElementById("bunny").disabled = false;
+    } else if (strScore >= 13) {
+        document.getElementById("bikini").disabled = false;
+        document.getElementById("bunny").disabled = true;
+    }
+}
+
+function takeDamage() {
+    var amount = document.getElementById("modHP").value;
+    var currentHP = document.getElementById("currentHP").value;
+    if (currentHP - amount >= 0) {
+        document.getElementById("currentHP").value = currentHP - amount;
+    } else {
+        document.getElementById("currentHP").value = 0;
+    }
+}
+
+function healHP() {
+    var amount = document.getElementById("modHP").value;
+    var currentHP = document.getElementById("currentHP").value;
+    var maxHP = document.getElementById("maxHP").value;
+    if (currentHP + amount <= maxHP) {
+        document.getElementById("currentHP").value = parseInt(currentHP) + parseInt(amount);
+    } else {
+        document.getElementById("currentHP").value = maxHP;
+    }
+}
+
+function levelUp() {
+    resetHP();
+    resetHitDices();
+}
+
+function longRest() {
+    resetHP();
+    resetHitDices();
+}
+
+function resetHP() {
+    document.getElementById("currentHP").value = document.getElementById("maxHP").value;
+}
+
+function resetHitDices() {
+    document.getElementById("hitDices").value = parseInt(document.getElementById("playerLevel").value);
+}
+
+function shortRest() {
+    var currentDices = parseInt(document.getElementById("hitDices").value);
+        if (currentDices > 0) {
+    var currentHP = parseInt(document.getElementById("currentHP").value);
+    var maxHP = parseInt(document.getElementById("maxHP").value);
+    var maxDie = parseInt(document.getElementById("hitDicesType").value);
+        var hitDieRoll = Math.floor(Math.random() * Math.floor(maxDie));
+    
+    if (currentHP + hitDieRoll <= maxHP) {
+        document.getElementById("currentHP").value = currentHP + hitDieRoll;
+        } else {
+            document.getElementById("currentHP").value = maxHP;
+                }
+
+    document.getElementById("hitDices").value = currentDices - 1;
+    }
+}
+
+function updateAll() {  // update all ⭐⭐⭐⭐⭐⭐
+    updateModifiers();
+    enableArmor();
+    equipArmor(equippedArmor);
+    updateProfBonus();
+    setSkills();
+}
+
+
+
+
+
+</script>
+
+<!--SCRIPT END🖥️-->
+
+<body class="background-image">
+     
+<div class="container"> 
+    <h1 class="text-center" style="background-color: rgba(255, 255, 255, 0.671);">ARE YOU A KOYUKI???</h1>   <!--KOYUKI ???-->
+    
+    <div class="row"> 
+            
+            <!-- TABELLA STATISTICHE-->
+            <div class="col-md-4"> 
+                <table class="table table-normal">
+                    <tr style="background-color: rgba(247, 0, 255, 0.258);"> 
+                        <th class="text-center table-small">Ability</th>
+                        <th class="text-center table-small">Score</th>
+                        <th class="text-center table-small">Mod</th>
+                    </tr>
+                    <!-- STRENGTH -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Strength<br>💪</td>
+                        <td class="text-center align-middle"><input class="text-center table-small" type="number" placeholder="10" id="strScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center" style="width:50px;" type="number" placeholder="+0" id="strMod" readonly>
+                            </tr>
+                    <!-- DEXTERITY -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Dexterity<br>⚔️</td>
+                        <td class="text-center  align-middle"><input class="text-center table-small" type="number" placeholder="10" id="dexScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="dexMod" readonly>
+                            </tr>
+                    <!-- MIND -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Mind<br>🧠</td>
+                        <td class="text-center table-auto align-middle"><input class="text-center table-small" type="number" placeholder="10" id="mindScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="mindMod" readonly>
+                            </tr>
+                    <!-- ASD -->
+                    <tr style="background-color: rgba(255, 255, 255, 0.671);"> 
+                        <td class="text-center table-small">Kawai<br>❣️</td>
+                        <td class="text-center table-auto align-middle"><input class="text-center table-small" type="number" placeholder="10" id="chaScore" onchange="updateAll()"></td>
+                        <td class="align-middle"><input class="text-center table-small" type="number" placeholder="+0" id="kawaMod" readonly>
+                            </tr>
+                </table>
+
+<!-- STAMINA START-->
+<div style="background-color: rgba(204, 0, 255, 0.258); padding-left: 25px;">
+<h1>Stamina</h1>
+<p style="font-size: 20px; font-weight: 750;">Value: &nbsp&nbsp<span id="demo" style="font-size: 30px;"></span></p>
+
+<div class="slidecontainer">
+  <input type="range" min="" max="10" value="5" class="slider" id="myRange">
+
+</div>
+
+<style>
+    .slidecontainer {
+      width: 95%;
+    }
+    
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+        position: relative;
+    }
+    
+    .slider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 11px;
+        right: 11px;
+        height: 4px;
+        background: repeating-linear-gradient(to right, #000, #000 1px, transparent 1px, transparent calc((100% - 1px) / 10));
+        transform: translateY(-50%);
+    }
+    
+    .slider:hover {
+      opacity: 1;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+    
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+    </style>
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+</div>
+
+<!-- Resource END -->
+
+
+<!-- 🩷 HP START -->
+            <style>
+
+                /* hides the checkbox */
+                .CUORE {
+                display: none;
+                }
+
+                /* changes the color when selected */
+                input:checked + label {
+                color: grey; 
+                filter: grayscale(100%);
+                }
+
+                /* for styling purpose only */
+                label {
+                font-size: 4.5em;
+                }
+
+            </style>
+
+<div style="background-color: rgba(0, 204, 255, 0.258); padding-bottom: 20px; " >
+    <span style="font-weight: 800 ;font-size: 50px; margin-left: 20px;"> HP: </span> 
+        <input type="number" id="currentHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;" readonly/>   
+  <span style="font-size: 50px; font-weight: 900;">/</span>
+        <input type="number" id="maxHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;"  min="0" />
+  <div id="boxHP" style="width: 550px;"></div>
+
+            <script>
+                // Selezione degli elementi
+                const maxHPInput = document.getElementById("maxHP");
+                const boxHP = document.getElementById("boxHP");
+                const currentHPInput = document.getElementById("currentHP");
+
+                // Funzione per aggiornare il valore di currentHP
+                function updateCurrentHP() {
+                const uncheckedBoxes = boxHP.querySelectorAll("input[type='checkbox']:not(:checked)").length;
+                currentHPInput.value = uncheckedBoxes;
+                }
+
+                // Funzione per generare i checkbox
+                function generateCheckboxes() {
+                // Svuota il contenitore
+                boxHP.innerHTML = "";
+
+                // Ottieni il valore massimo degli HP
+                const maxHP = parseInt(maxHPInput.value) || 0;
+
+                // Genera i checkbox
+                for (let i = 1; i <= maxHP; i++) {
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.id = `cuore${i}`;
+                    checkbox.name= `cuore${i}`;
+                    checkbox.classList.add("CUORE");
+
+                    const label = document.createElement("label");
+                    label.htmlFor = `cuore${i}`;
+                    label.textContent = "🩷";
+
+                    // Aggiungi evento per aggiornare currentHP al cambio di stato
+                    checkbox.addEventListener("change", updateCurrentHP);
+
+                    // Aggiungi il checkbox e il label al div
+                    boxHP.appendChild(checkbox);
+                    boxHP.appendChild(label);
+                }
+
+                // Aggiorna currentHP iniziale
+                updateCurrentHP();
+                }
+
+                // Aggiungi un listener all'input
+                maxHPInput.addEventListener("input", generateCheckboxes);
+            </script>
+    </div>
+<!-- 🩷 HP END -->
+                
+</div>
+
+
+
+<!-- ARMOR 🛡️🛡️🛡️ -->
+                <br><br>
+<div style="background-color: rgba(204, 0, 255, 0.258); min-width: 520px; padding-left: 20px;">
+    <table>  <!-- DR -->              
+        <tr> 
+            <th><H2 style="width: 75px; margin-top: 4px">DR:</H2></th>
+            <td> <input class="text-center" type="number" id="armorClass" placeholder="+0" onchange="updateAll()" readonly></td>
+        </tr>
+    </table>   
+
+        <!--Equipped Armor-->              
+        
+    <H2 style="width: px; margin-top: 4px">Equipped Armor:</H2>
+    <select id="equippedArmor" onchange="equipArmor(this)"> 
+        
+        <option value="Naked">Naked</option>    
+    
+        <optgroup id="Light Armor" Value="Light Armor" label="Light Armor"> 
+        <option value="Swimsuit">Swimsuit</option>
+        <option value="Maid">Maid</option>
+        </optgroup>
+
+        <optgroup id="Medium Armor" Value="Medium Armor" label="Medium Armor"> 
+        <option value="Gym">Gym Clothes</option>
+        <option value="Pajama">Pajama</option>
+        </optgroup>
+
+        <optgroup id="Heavy Armor" Value="Heavy Armor" label="Heavy Armor"> 
+        <option value="bikini" id="bikini" disabled>Bikini Armor</option>
+        <option value="bunny" id="bunny" disabled>Bunny Crusader</option>
+        </optgroup>                            
+
+            </select>
+            <br><br>
+                    
+
+            </div>
+
+            <!-- PLAYER INFO-->
+                       
+                <!-- PLAYER LEVEL-->
+            <div class="col-md-4" style="background-color: rgba(0, 204, 255, 0.258);"> 
+                <H2 style="float: left;">Player Level</H2>
+                <input style="float: right; width: 45% ; margin-top: 8px" class="text-center" type="number" id="playerLevel" placeholder="+0" onchange="updateAll(); levelUp();">                   
+                <br><br>
+                         
+                <!-- PROFICENCY INFO-->
+                <H2 style="width: 75%; float: left; margin-top: 18px;">Proficency Bonus</H2>
+                <br>
+                <input style="float: right ;width: 25%;" class="text-center" type="number" id="profBonus" value="2" readonly>
+                <br>                 
+            </div>
+
+        <!-- skills -->
+        <div class="row" style="background-color: rgba(0, 204, 255, 0.258); margin-left: 0px;">
+            <div class="col-md-4" > 
+                <H2>Skills</H2>
+                
+                <table>
+                    <tr>
+                        <td><input type="checkbox" id="acroProf" onchange="updateAll()"></td>
+                        <td>Acrobatics</label></td>
+                        <td><input type="number" id="acroScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="athlProf" onchange="updateAll()"></td>
+                        <td>Atheltics</label></td>
+                        <td><input type="number" id="athlScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="meleeProf" onchange="updateAll()"></td>
+                        <td>Melee</label></td>
+                        <td><input type="number" id="meleeScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="shootProf" onchange="updateAll()"></td>
+                        <td>Shooting</label></td>
+                        <td><input type="number" id="shootScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="talkProf" onchange="updateAll()"></td>
+                        <td>Talking</label></td>
+                        <td><input type="number" id="talkScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="cryProf" onchange="updateAll()"></td>
+                        <td>Crying</label></td>
+                        <td><input type="number" id="cryScore" readonly></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="color: rgb(255, 255, 255);" class="text-center">Ni Ha Ha Ha?</td>
+                    </tr>
+
+                
+            </table>
+            </div>
+
+
+         </div>
+
+
+</body>
+
+</html>
