@@ -376,81 +376,88 @@ slider.oninput = function() {
 
 <!-- 🩷 HP START -->
             <style>
-
                 /* hides the checkbox */
                 .CUORE {
-                display: none;
+                    display: none;
                 }
 
                 /* changes the color when selected */
                 input:checked + label {
-                color: grey; 
-                filter: grayscale(100%);
+                    color: grey; 
+                    filter: grayscale(100%);
                 }
 
                 /* for styling purpose only */
                 label {
-                font-size: 4.5em;
+                    font-size: 4em; 
                 }
 
+                .checkbox-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .checkbox-container label {
+                    width: 20%; /* Each label takes up 20% of the container width, making 5 per row */
+                    text-align: center;
+                }
             </style>
 
-<div style="background-color: rgba(0, 204, 255, 0.258); padding-bottom: 20px; " >
-    <span style="font-weight: 800 ;font-size: 50px; margin-left: 20px;"> HP: </span> 
-        <input type="number" id="currentHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;" readonly/>   
-  <span style="font-size: 50px; font-weight: 900;">/</span>
-        <input type="number" id="maxHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;"  min="0" />
-  <div id="boxHP" style="width: 550px;"></div>
+            <div style="background-color: rgba(0, 204, 255, 0.258); padding-bottom: 20px;">
+                <span style="font-weight: 800; font-size: 50px; margin-left: 20px;"> HP: </span> 
+                <input type="number" id="currentHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;" readonly/>   
+                <span style="font-size: 50px; font-weight: 900;">/</span>
+                <input type="number" id="maxHP" style="font-size: 40px; font-weight: 900; width: 80px; text-align: center;" min="0" />
+                <div id="boxHP" class="checkbox-container"></div>
 
-            <script>
-                // Selezione degli elementi
-                const maxHPInput = document.getElementById("maxHP");
-                const boxHP = document.getElementById("boxHP");
-                const currentHPInput = document.getElementById("currentHP");
+                <script>
+                    // Selezione degli elementi
+                    const maxHPInput = document.getElementById("maxHP");
+                    const boxHP = document.getElementById("boxHP");
+                    const currentHPInput = document.getElementById("currentHP");
 
-                // Funzione per aggiornare il valore di currentHP
-                function updateCurrentHP() {
-                const uncheckedBoxes = boxHP.querySelectorAll("input[type='checkbox']:not(:checked)").length;
-                currentHPInput.value = uncheckedBoxes;
-                }
+                    // Funzione per aggiornare il valore di currentHP
+                    function updateCurrentHP() {
+                        const uncheckedBoxes = boxHP.querySelectorAll("input[type='checkbox']:not(:checked)").length;
+                        currentHPInput.value = uncheckedBoxes;
+                    }
 
-                // Funzione per generare i checkbox
-                function generateCheckboxes() {
-                // Svuota il contenitore
-                boxHP.innerHTML = "";
+                    // Funzione per generare i checkbox
+                    function generateCheckboxes() {
+                        // Svuota il contenitore
+                        boxHP.innerHTML = "";
 
-                // Ottieni il valore massimo degli HP
-                const maxHP = parseInt(maxHPInput.value) || 0;
+                        // Ottieni il valore massimo degli HP
+                        const maxHP = parseInt(maxHPInput.value) || 0;
 
-                // Genera i checkbox
-                for (let i = 1; i <= maxHP; i++) {
-                    const checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.id = `cuore${i}`;
-                    checkbox.name= `cuore${i}`;
-                    checkbox.classList.add("CUORE");
+                        // Genera i checkbox
+                        for (let i = 1; i <= maxHP; i++) {
+                            const checkbox = document.createElement("input");
+                            checkbox.type = "checkbox";
+                            checkbox.id = `cuore${i}`;
+                            checkbox.name = `cuore${i}`;
+                            checkbox.classList.add("CUORE");
 
-                    const label = document.createElement("label");
-                    label.htmlFor = `cuore${i}`;
-                    label.textContent = "🩷";
+                            const label = document.createElement("label");
+                            label.htmlFor = `cuore${i}`;
+                            label.textContent = "🩷";
 
-                    // Aggiungi evento per aggiornare currentHP al cambio di stato
-                    checkbox.addEventListener("change", updateCurrentHP);
+                            // Aggiungi evento per aggiornare currentHP al cambio di stato
+                            checkbox.addEventListener("change", updateCurrentHP);
 
-                    // Aggiungi il checkbox e il label al div
-                    boxHP.appendChild(checkbox);
-                    boxHP.appendChild(label);
-                }
+                            // Aggiungi il checkbox e il label al div
+                            boxHP.appendChild(checkbox);
+                            boxHP.appendChild(label);
+                        }
 
-                // Aggiorna currentHP iniziale
-                updateCurrentHP();
-                }
+                        // Aggiorna currentHP iniziale
+                        updateCurrentHP();
+                    }
 
-                // Aggiungi un listener all'input
-                maxHPInput.addEventListener("input", generateCheckboxes);
-            </script>
-    </div>
-<!-- 🩷 HP END -->
+                    // Aggiungi un listener all'input
+                    maxHPInput.addEventListener("input", generateCheckboxes);
+                </script>
+            </div>
                 
 </div>
 
