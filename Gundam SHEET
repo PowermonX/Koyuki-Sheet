@@ -8,7 +8,7 @@
 
 <style>
 .gundam {
-    background-image: url("https://github.com/PowermonX/Koyuki-Sheet/blob/main/GundamBlueprint.jpg?raw=true");
+    background-image: url('https://cdn.donmai.us/original/62/49/6249332f7034b4f2ba74f1e538e52be7.jpg');
     width: 500px;
     height: 600px;
     background-repeat: no-repeat;
