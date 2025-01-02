@@ -8,7 +8,7 @@
 
 <style>
 .gundam {
-    background: url('/GundamBlueprint.jpg');
+    background: url("https://drive.usercontent.google.com/download?id=16pBF2y2PSO5ylQr30nwawCI0uQoRWiuy");
     width: 500px;
     height: 600px;
     background-repeat: no-repeat;
